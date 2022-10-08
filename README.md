@@ -1,6 +1,6 @@
 # Statemachines-in-a-vue-app
 
-A Vue application using statemachines to manage global app state and local component state.
+A Vue application using state machines (xstate) to manage global app state and local component state.
 
 ## Recommended IDE Setup
 

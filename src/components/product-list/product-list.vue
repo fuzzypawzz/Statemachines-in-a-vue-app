@@ -1,7 +1,20 @@
 <template>
-  <div v-for="product in products" :key="product.name">
-    <p>{{ product.name }} | Price: {{ product.price }} DKK</p>
-  </div>
+  <table>
+    <tr v-for="product in products" :key="product.name">
+      <td>{{ product.name }}</td>
+      <td>{{ product.price }} DKK</td>
+      <td>
+        <button
+          :disabled="networking"
+          @click="addToBasket({ id: product.id, quantity: 1 })"
+        >
+          Add to basket
+        </button>
+      </td>
+    </tr>
+  </table>
+
+  <p>{{ basket }}</p>
 
   <button @click="loadProducts()">Load more</button>
 
@@ -13,7 +26,7 @@ import { defineComponent } from 'vue';
 import { interpret, type StateValue } from 'xstate';
 
 import { machine, states } from './product-list.machine';
-import type { IProduct } from './product-list.types';
+import type { IBasketItem, IProduct } from './product-list.types';
 
 export default defineComponent({
   data() {
@@ -44,6 +57,10 @@ export default defineComponent({
       return this.machineState.context.products;
     },
 
+    basket(): IBasketItem[] {
+      return this.machineState.context.basket;
+    },
+
     networking(): boolean {
       return this.currentState === states.loading;
     },
@@ -52,6 +69,13 @@ export default defineComponent({
   methods: {
     loadProducts(): void {
       this.machine.send({ type: 'LOAD_PRODUCTS' });
+    },
+
+    addToBasket({ id, quantity }: IBasketItem): void {
+      this.machine.send({
+        type: 'ADD_TO_BASKET',
+        payload: { id, quantity },
+      });
     },
   },
 });

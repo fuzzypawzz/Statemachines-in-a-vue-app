@@ -20,6 +20,7 @@ export interface Typegen0 {
     delays: never;
   };
   eventsCausingActions: {
+    addToBasket: 'ADD_TO_BASKET';
     setProducts: 'done.invoke.(machine).loading:invocation[0]';
   };
   eventsCausingServices: {

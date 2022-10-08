@@ -1,4 +1,4 @@
-# Statemachines-in-a-vue-app
+# State machines in a vue app
 
 A Vue application using state machines (xstate) to manage global app state and local component state.
 
